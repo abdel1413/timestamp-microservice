@@ -31,35 +31,64 @@ app.get("/api/hello", function (req, res) {
 //create an empty object
 const responseObject = {};
 
+const isInvalidDate = (date) => {
+  //params = parseInt(params);
+  console.log(date.toUTCString() === "Invalid Date");
+  console.log("in", date, typeof date);
+  return date.toUTCString() === "Invalid Date";
+};
+
 app.get("/api/:input", (req, res) => {
-  let params = req.params.input;
+  let date = new Date(req.params.input);
+  console.log("inpu", date);
 
-  if (params.includes("-")) {
-    let date = new Date(params);
-    let millisecsonds = date.getTime();
-
-    responseObject["unix"] = millisecsonds;
-    responseObject["utc"] = date.toUTCString();
-  } else {
-    // let date = new Date(1970, 0, 1);
-    // let ms = date.setTime(params);
-    params = parseInt(params);
-    let da = new Date(params);
-    let ms = da.getTime();
-    let utc = da.toUTCString();
-
-    console.log("date", da);
-    console.log("ms", ms);
-    console.log("utc", utc);
-    responseObject["unix"] = new Date(params).getTime();
-    responseObject["utc"] = new Date(params).toUTCString();
+  //if the input pass the text ie true
+  // the we need to convert it into number using +
+  if (isInvalidDate(date)) {
+    date = new Date(+req.params.input);
+    console.log("ddd", date);
   }
+  console.log("innnp", date, typeof date);
 
-  if (!responseObject["unix"] || !responseObject["utc"]) {
+  // if (isInvalidDate(input)) {
+  //   input = new Date(req.params.input);
+  // }
+
+  //handles error if invalid params is entered
+  if (isInvalidDate(date)) {
+    console.log("d111", date, typeof date);
     res.json({ error: "Invalid Date" });
-  } else {
-    res.json(responseObject);
+    return;
   }
+
+  res.json({
+    unix: date.getTime(),
+    utc: date.toUTCString(),
+  });
+
+  // if (params.includes("-" || " " || "/")) {
+  //   let date = new Date(params);
+  //   let millisecsonds = date.getTime();
+
+  //   responseObject["unix"] = millisecsonds;
+  //   responseObject["utc"] = date.toUTCString();
+  // } else {
+  //   // let date = new Date(1970, 0, 1);
+  //   // let ms = date.setTime(params);
+  //   params = parseInt(params);
+  //   let da = new Date(params);
+  //   let ms = da.getTime();
+  //   let utc = da.toUTCString();
+
+  //   responseObject["unix"] = new Date(params).getTime();
+  //   responseObject["utc"] = new Date(params).toUTCString();
+  // }
+
+  // if (!responseObject["unix"] || !responseObject["utc"]) {
+  //   res.json({ error: "Invalid Date" });
+  // } else {
+  //   res.json(responseObject);
+  // }
 });
 
 //create api route for empty params
@@ -73,6 +102,6 @@ app.get("/api/", (req, res) => {
   res.json(responseObject);
 });
 
-var listener = app.listen(3000, function () {
-  console.log("Your app is listening on port " + 3000);
+var listener = app.listen(3001, function () {
+  console.log("Your app is listening on port " + 3001);
 });
