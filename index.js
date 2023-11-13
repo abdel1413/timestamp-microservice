@@ -40,25 +40,17 @@ const isInvalidDate = (date) => {
 
 app.get("/api/:input", (req, res) => {
   let date = new Date(req.params.input);
-  console.log("inpu", date);
 
   //if the input pass the text ie true
   // the we need to convert it into number using +
   //this convert string to number
   if (isInvalidDate(date)) {
     date = new Date(+req.params.input);
-    console.log("ddd", date);
   }
-  console.log("innnp", date, typeof date);
-
-  // if (isInvalidDate(input)) {
-  //   input = new Date(req.params.input);
-  // }
 
   //handles error if it is still invalid for params entered
   // hanldles invalid input such as string chars
   if (isInvalidDate(date)) {
-    console.log("d111", date, typeof date);
     res.json({ error: "Invalid Date" });
     return;
   }
