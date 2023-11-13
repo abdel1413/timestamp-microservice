@@ -44,6 +44,7 @@ app.get("/api/:input", (req, res) => {
 
   //if the input pass the text ie true
   // the we need to convert it into number using +
+  //this convert string to number
   if (isInvalidDate(date)) {
     date = new Date(+req.params.input);
     console.log("ddd", date);
@@ -54,17 +55,22 @@ app.get("/api/:input", (req, res) => {
   //   input = new Date(req.params.input);
   // }
 
-  //handles error if invalid params is entered
+  //handles error if it is still invalid for params entered
+  // hanldles invalid input such as string chars
   if (isInvalidDate(date)) {
     console.log("d111", date, typeof date);
     res.json({ error: "Invalid Date" });
     return;
   }
 
-  res.json({
-    unix: date.getTime(),
-    utc: date.toUTCString(),
-  });
+  responseObject["unix"] = date.getTime();
+  responseObject["utc"] = date.toUTCString();
+  res.json(responseObject);
+
+  // res.json({
+  //   unix: date.getTime(),
+  //   utc: date.toUTCString(),
+  // });
 
   // if (params.includes("-" || " " || "/")) {
   //   let date = new Date(params);
@@ -92,6 +98,7 @@ app.get("/api/:input", (req, res) => {
 });
 
 //create api route for empty params
+
 app.get("/api/", (req, res) => {
   let currDate = new Date();
   let milliSeconds = currDate.getTime();
@@ -102,6 +109,6 @@ app.get("/api/", (req, res) => {
   res.json(responseObject);
 });
 
-var listener = app.listen(3001, function () {
-  console.log("Your app is listening on port " + 3001);
+var listener = app.listen(3002, function () {
+  console.log("Your app is listening on port " + 3002);
 });
