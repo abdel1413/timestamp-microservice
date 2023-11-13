@@ -101,6 +101,6 @@ app.get("/api/", (req, res) => {
   res.json(responseObject);
 });
 
-var listener = app.listen(3002, function () {
-  console.log("Your app is listening on port " + 3002);
+var listener = app.listen(3000, function () {
+  console.log("Your app is listening on port " + 3000);
 });
