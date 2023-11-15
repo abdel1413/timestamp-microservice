@@ -11,7 +11,8 @@ var cors = require("cors");
 app.use(cors({ optionsSuccessStatus: 200 })); // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
+// app.use(express.static("/public"));
+app.use("/public", express.static(__dirname + "/public"));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
@@ -19,9 +20,9 @@ app.get("/", function (req, res) {
 });
 
 // your first API endpoint...
-app.get("/api/hello", function (req, res) {
-  res.json({ greeting: "hello API" });
-});
+// app.get("/api/hello", function (req, res) {
+//   res.json({ greeting: "hello API" });
+// });
 
 // listen for requests :)
 // var listener = app.listen(process.env.PORT, function () {
@@ -33,8 +34,7 @@ const responseObject = {};
 
 const isInvalidDate = (date) => {
   //params = parseInt(params);
-  console.log(date.toUTCString() === "Invalid Date");
-  console.log("in", date, typeof date);
+
   return date.toUTCString() === "Invalid Date";
 };
 
@@ -57,6 +57,7 @@ app.get("/api/:input", (req, res) => {
 
   responseObject["unix"] = date.getTime();
   responseObject["utc"] = date.toUTCString();
+
   res.json(responseObject);
 
   // res.json({
@@ -101,6 +102,6 @@ app.get("/api/", (req, res) => {
   res.json(responseObject);
 });
 
-var listener = app.listen(3000, function () {
-  console.log("Your app is listening on port " + 3000);
+var listener = app.listen(3001, function () {
+  console.log("Your app is listening on port " + 3001);
 });
