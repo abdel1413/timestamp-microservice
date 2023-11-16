@@ -102,6 +102,6 @@ app.get("/api/", (req, res) => {
   res.json(responseObject);
 });
 
-var listener = app.listen(3001, function () {
-  console.log("Your app is listening on port " + 3001);
+var listener = app.listen(process.env.PORT, function () {
+  console.log("Your app is listening on port " + listener.address().port);
 });
