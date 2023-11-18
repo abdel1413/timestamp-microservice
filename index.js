@@ -35,7 +35,6 @@ const responseObject = {};
 
 const isInvalidDate = (date) => {
   //params = parseInt(params);
-
   return date.toUTCString() === "Invalid Date";
 };
 
